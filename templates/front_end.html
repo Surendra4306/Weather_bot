@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 36px;
+            margin-top: 50px;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (previous code) ... -->
+</head>
+<body>
+    <h1>Greetings!</h1>
+    <form id="weatherForm">
+        <label for="city">Enter a city:</label>
+        <input type="text" id="city" name="city" required>
+        <input type="submit" value="Get Weather">
+    </form>
+
+    <div id="weatherInfo" style="display: none;">
+        <p id="weatherText"></p>
+    </div>
+
+    <script>
+        document.getElementById("weatherForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const city = document.getElementById("city").value;
+            fetchWeather(city);
+        });
+
+        function fetchWeather(city) {
+            fetch(`/get_weather?city=${city}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert("Error fetching weather data. Please try again.");
+                    } else {
+                        document.getElementById("weatherText").textContent = data.weather_info;
+                        document.getElementById("weatherInfo").style.display = "block";
+                    }
+                })
+                .catch(error => {
+                    alert("An error occurred. Please try again later.");
+                });
+        }
+    </script>
+</body>
+</html>
